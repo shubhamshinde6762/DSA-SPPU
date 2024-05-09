@@ -3,6 +3,7 @@
 using namespace std;
 
 // 1 95 1 45 1 87 1 62 1 10 1 2 1 54 1 91 1 52 0
+// 1 50 1 30 1 20 1 35 1 32 1 34 1 33 1 40 1 38 1 45 1 46 1 47 1 43 1 80 1 90 1 100 1 110 0
 
 class Node
 {
@@ -34,244 +35,206 @@ public:
 
 void threadBinaryTree::create()
 {
-    head = new Node();
-    head->rbit = 1;
-    head->left = head;
-    head->right = head;
-    while (1)
+    head = new Node(-1);
+    head->right = head->left = head;
+
+    bool take = 1;
+
+    do
     {
-        cout << "Enter the Element to Insert : " << endl;
-        int d;
-        cin >> d;
-        Insert(d);
-        cout << "Are you want to continue? (1 / 0)" << endl;
-        bool b;
-        cin >> b;
-        if (!b)
-            break;
-    }
+        int data = 0;
+        cout << "Enter Data : " << endl;
+        cin >> data;
+        Insert(data);
 
-    inOrder();
+        cout << "Are you want to continue ? " << endl;
+        cin >> take;
+    } while (take);
 
-    cout << endl;
-
-    cout << "Threaded BST Created Successfully...." << endl;
+    cout << "Threaded Binary Tree Created.." << endl;
 }
 
-void threadBinaryTree::Insert(int d)
+void threadBinaryTree::Insert(int data)
 {
     if (!head->lbit)
     {
-        Node *temp = new Node(d);
-
-        temp->right = head->right;
-        temp->left = head->left;
-
-        head->left = temp;
-        head->lbit = true;
+        head->left = new Node(data);
+        head->lbit = 1;
+        head->left->left = head->left->right = head;
         return;
     }
 
     Node *temp = head->left;
-
-    while (1)
+    while (temp)
     {
-        if (temp->data < d && !temp->rbit)
+        if (temp->data < data)
         {
-            Node *temp2 = new Node(d);
+            if (temp->rbit)
+                temp = temp->right;
+            else
+            {
+                Node *node = new Node(data);
+                node->right = temp->right;
+                node->rbit = temp->rbit;
+                node->left = temp;
+                node->lbit = 0;
+                temp->right = node;
+                temp->rbit = 1;
+                return;
+            }
+        }
+        else if (temp->data > data)
+        {
+            if (temp->lbit)
+                temp = temp->left;
+            else
+            {
+                Node *node = new Node(data);
+                node->right = temp;
+                node->rbit = 0;
+                node->left = temp->left;
+                node->lbit = temp->lbit;
+                temp->left = node;
+                temp->lbit = 1;
+                return;
+            }
+        }
 
-            temp2->right = temp->right;
-            temp2->rbit = 0;
-            temp2->left = temp;
-            temp2->lbit = 0;
-
-            temp->rbit = 1;
-            temp->right = temp2;
+        else
+        {
+            cout << "Data Already Present" << endl;
             return;
         }
-        else if (temp->data > d && !temp->lbit)
-        {
-            Node *temp2 = new Node(d);
-
-            temp2->left = temp->left;
-            temp2->rbit = 0;
-            temp2->right = temp;
-            temp2->lbit = 0;
-
-            temp->lbit = 1;
-            temp->left = temp2;
-            return;
-        }
-
-        if (temp->data == d)
-        {
-            cout << "Duplicate Data" << endl;
-            return;
-        }
-
-        if (temp->rbit && temp->data < d)
-            temp = temp->right;
-        else if (temp->lbit)
-            temp = temp->left;
     }
 }
 
 void threadBinaryTree::preOrder()
 {
-    if (!head)
-    {
-        cout << "Tree is Not Created!" << endl;
-        return;
-    }
-
+    Node *node = head->left;
     bool flag = 1;
-    Node *temp = head->left;
 
-    while (temp != head)
+    while (node != head)
     {
         while (flag)
         {
-            cout << temp->data << " ";
-            if (temp->lbit)
-                temp = temp->left;
+            cout << node->data << " ";
+            if (node->lbit)
+                node = node->left;
             else
                 break;
         }
 
-        flag = temp->rbit;
-        temp = temp->right;
+        flag = node->rbit;
+        node = node->right;
     }
 }
 
 void threadBinaryTree::inOrder()
 {
-    if (!head->lbit)
+    Node *node = head->left;
+
+    while (node->lbit)
+        node = node->left;
+
+    while (node != head)
     {
-        cout << "Tree is not Created!" << endl;
-        return;
-    }
-
-    Node *temp = head->left;
-
-    while (temp->lbit)
-        temp = temp->left;
-
-    while (temp != head)
-    {
-        cout << temp->data << " ";
-
-        if (!temp->rbit)
-            temp = temp->right;
-        else
+        cout << node->data << " ";
+        if (node->rbit)
         {
-            temp = temp->right;
-            while (temp->lbit)
-                temp = temp->left;
+            node = node->right;
+            while (node->lbit)
+                node = node->left;
         }
+        else
+            node = node->right;
     }
 }
 
 void threadBinaryTree::deleteNode(int key)
 {
-    if (!head)
-    {
-        cout << "Tree is empty. Cannot delete." << endl;
-        return;
-    }
-
-    Node *temp = head->left;
     Node *parent = head;
+    Node *root = head->left;
 
-    while (temp != head && temp->data != key)
+    while (root != head && root->data != key)
     {
-        if (temp->lbit && key < temp->data)
-        {
-            parent = temp;
-            temp = temp->left;
-        }
-        else if (temp->rbit)
-        {
-            parent = temp;
-            temp = temp->right;
-        }
+        if (root->rbit && root->data < key)
+            parent = root, root = root->right;
+        else if (root->lbit && root->data > key)
+            parent = root, root = root->left;
         else
             break;
     }
 
-    if (temp == head || temp->data != key)
+    if (root == head || root->data != key)
     {
-        cout << "Key not found in the tree." << endl;
+        cout << "Data Not Found" << endl;
         return;
     }
 
-    if (!temp->lbit && !temp->rbit)
+    if (!root->lbit && !root->rbit)
     {
-        if (temp == parent->left)
-        {
-            parent->left = temp->left;
-            parent->lbit = temp->lbit;
-
-            temp->left = nullptr;
-            temp->right = nullptr;
-        }
+        if (parent->left == root)
+            parent->left = root->left, parent->lbit = root->lbit;
         else
-        {
-            parent->right = temp->right;
-            parent->rbit = temp->rbit;
-
-            temp->left = nullptr;
-            temp->right = nullptr;
-        }
-        delete temp;
+            parent->right = root->right, parent->rbit = root->rbit;
+        return;
     }
-    else if ((temp->lbit && !temp->rbit) || (!temp->lbit && temp->rbit))
+    else if ((!root->lbit && root->rbit) || (root->lbit && !root->rbit))
     {
-        //     cout<<temp->lbit<<temp->rbit<<endl;
-        Node *child = (temp->lbit) ? temp->left : temp->right;
-        bool childBit = (temp->lbit) ? temp->lbit : temp->rbit;
-        if (temp == parent->left)
-        {
-            parent->left = child;
-            parent->lbit = childBit;
+        Node *child = root->lbit ? root->left : root->right;
 
+        if (parent->left == root)
+        {
+            parent->left = child, parent->lbit = 1;
             while (child->rbit)
                 child = child->right;
-
             child->right = parent;
         }
         else
         {
-            parent->right = child;
-            parent->rbit = childBit;
-
+            parent->right = child, parent->rbit = 1;
             while (child->lbit)
                 child = child->left;
-
             child->left = parent;
         }
-        delete temp;
+        cout << "first" << endl;
+        return;
+    }
+
+    Node *temp = root;
+    Node *child = root->right;
+
+    while (child->lbit)
+        temp = child, child = child->left;
+
+    root->data = child->data;
+
+    if (temp->right == child)
+    {
+        temp->right = child->right, temp->rbit = child->rbit;
+        delete child;
+
+        if (temp->rbit)
+        {
+            child = temp->right;
+            while (child->lbit)
+                child = child->left;
+            child->left = temp;
+        }
     }
     else
     {
-        Node *successor = temp->right;
-        parent = temp;
-        while (successor->lbit)
+        temp->left = child->right, temp->lbit = child->rbit;
+        delete child;
+
+        if (temp->lbit)
         {
-            parent = successor;
-            successor = successor->left;
+            child = temp->left;
+            while (child->rbit)
+                child = child->right;
+
+            child->right = temp;
         }
-        temp->data = successor->data;
-        if (successor == parent->left)
-        {
-            parent->left = successor->right;
-            parent->lbit = 0;
-        }
-        else
-        {
-            parent->right = successor->right;
-            parent->rbit = 0;
-        }
-        delete successor;
     }
 }
 

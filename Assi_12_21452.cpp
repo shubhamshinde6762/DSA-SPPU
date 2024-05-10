@@ -1,144 +1,207 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-struct Record
+class Student
 {
-    int key;
-    string data;
-};
-
-class DirectAccessFile
-{
-private:
-    string filename;
+    int rollNo;
+    char name[20];
+    char division[20];
+    char address[20];
 
 public:
-    DirectAccessFile(const string &fname) : filename(fname) {}
-
-    void addRecord(const Record &record)
+    Student() : rollNo(-1), name("-1"), division("-1"), address("-1") {}
+    void getStudentDetails()
     {
-        ofstream file(filename, ios::binary | ios::app);
-        if (!file)
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter division: ";
+        cin >> division;
+        cout << "Enter roll number: ";
+        cin >> rollNo;
+        cout << "Enter address: ";
+        cin >> address;
+    }
+    void showStudentDetails()
+    {
+        cout << "Roll number: " << rollNo << endl;
+        cout << "Name: " << name << endl;
+        cout << "Address: " << address << endl;
+        cout << "Division: " << division << endl;
+    }
+    friend class StudentDB;
+};
+
+class StudentDB
+{
+    Student s;
+
+public:
+    StudentDB()
+    {
+        ifstream obj;
+        obj.open("hash.dat", ios::ate | ios::binary);
+
+        if (obj.tellg() < 10 * sizeof(s))
         {
-            cerr << "Error opening file." << endl;
-            return;
+            ofstream obj2;
+            obj2.open("temp.dat", ios::out | ios::binary);
+            for (int i = 0; i < 10; i++)
+                obj2.write(reinterpret_cast<char *>(&s), sizeof(s));
+            obj2.close();
+            obj.close();
+
+            remove("hash.dat");
+            rename("temp.dat", "hash.dat");
         }
-
-        file.write(reinterpret_cast<const char *>(&record), sizeof(Record));
-        cout << "Record added successfully." << endl;
-
-        file.close();
+        else
+            obj.close();
     }
 
-    void deleteRecord(int key)
+    int getHash(int roll)
     {
-        ifstream inFile(filename, ios::binary);
-        ofstream outFile("temp.bin", ios::binary);
+        return roll % 10;
+    }
 
-        if (!inFile || !outFile)
+    int saveStudentData()
+    {
+        s.getStudentDetails();
+        fstream obj;
+        obj.open("hash.dat", ios::in | ios::out | ios::binary);
+
+        if (!obj)
         {
-            cerr << "Error opening file." << endl;
+            cout << "File open Error" << endl;
+            return 0;
+        }
+        obj.seekp(sizeof(s) * getHash(s.rollNo), ios::beg);
+        obj.write(reinterpret_cast<char *>(&s), sizeof(s));
+        obj.close();
+    }
+    void displayStudentData()
+    {
+        ifstream obj;
+        obj.open("hash.dat", ios::in | ios::binary);
+
+        if (!obj)
+        {
+            cout << "File open Error" << endl;
             return;
         }
 
-        bool found = false;
-        Record record;
-        while (inFile.read(reinterpret_cast<char *>(&record), sizeof(Record)))
+        obj.read(reinterpret_cast<char *>(&s), sizeof(s));
+        while (!obj.eof())
         {
-            if (record.key != key)
-            {
-                outFile.write(reinterpret_cast<const char *>(&record), sizeof(Record));
-            }
-            else
-            {
-                found = true;
-            }
+            s.showStudentDetails();
+            obj.read(reinterpret_cast<char *>(&s), sizeof(s));
         }
 
-        inFile.close();
-        outFile.close();
+        obj.close();
+    }
+    void searchStudentDetails(const int roll)
+    {
+        ifstream obj;
+        obj.open("hash.dat", ios::in | ios::binary);
 
-        if (found)
+        obj.seekg(sizeof(s) * getHash(roll));
+        if (!obj)
         {
-            remove(filename.c_str());
-            rename("temp.bin", filename.c_str());
+            cout << "File open Error" << endl;
+            return;
+        }
+
+        obj.read(reinterpret_cast<char *>(&s), sizeof(s));
+        obj.close();
+        if (s.rollNo != -1)
+        {
+            s.showStudentDetails();
+            return;
+        }
+
+        cout << "Record Not Found" << endl;
+    }
+    void deleteStudentDetails(int roll)
+    {
+        fstream obj;
+        obj.open("hash.dat", ios::in | ios::out | ios::binary);
+
+        if (!obj)
+        {
+            cout << "File open Error" << endl;
+            return;
+        }
+
+        int pos = getHash(roll) * sizeof(Student);
+        obj.seekg(pos, ios::beg);
+
+        Student temp;
+        obj.read(reinterpret_cast<char *>(&temp), sizeof(Student));
+
+        if (temp.rollNo == roll)
+        {
+            obj.seekp(pos, ios::beg);
+            Student empty;
+            obj.write(reinterpret_cast<char *>(&empty), sizeof(Student));
             cout << "Record deleted successfully." << endl;
         }
         else
-        {
             cout << "Record not found." << endl;
-        }
-    }
 
-    void displayAllRecords()
-    {
-        ifstream file(filename, ios::binary);
-        if (!file)
-        {
-            cerr << "Error opening file." << endl;
-            return;
-        }
-
-        Record record;
-        while (file.read(reinterpret_cast<char *>(&record), sizeof(Record)))
-        {
-            cout << "Key: " << record.key << ", Data: " << record.data << endl;
-        }
-
-        file.close();
+        obj.close();
     }
 };
 
 int main()
 {
-    DirectAccessFile directAccessFile("direct_access_file.bin");
-
-    int choice;
+    int ch, ch1 = 1;
+    StudentDB obj;
+    string data;
+    int roll;
     do
     {
-        cout << "\nMenu:\n";
-        cout << "1. Add record\n";
-        cout << "2. Delete record\n";
-        cout << "3. Display all records\n";
-        cout << "4. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
+        cout << "===============================" << endl;
+        cout << "1-Add Student Data" << endl;
+        cout << "2-Display all students" << endl;
+        cout << "3-Search Student Data" << endl;
+        cout << "4-Delete Student Data" << endl;
+        cout << "5-Exit" << endl;
+        cout << "===============================" << endl;
+        cout << "Enter your choice" << endl;
+        cin >> ch;
 
-        switch (choice)
+        switch (ch)
         {
         case 1:
-        {
-            Record newRecord;
-            cout << "Enter key: ";
-            cin >> newRecord.key;
-            cin.ignore();
-            cout << "Enter data: ";
-            getline(cin, newRecord.data);
-            directAccessFile.addRecord(newRecord);
+            obj.saveStudentData();
             break;
-        }
+
         case 2:
-        {
-            int key;
-            cout << "Enter the key of the record to delete: ";
-            cin >> key;
-            directAccessFile.deleteRecord(key);
+            obj.displayStudentData();
             break;
-        }
+
         case 3:
-            cout << "Displaying all records:\n";
-            directAccessFile.displayAllRecords();
+            cout << "Enter the name : "
+                 << " ";
+            cin >> roll;
+            cout << endl;
+            obj.searchStudentDetails(roll);
             break;
+
         case 4:
-            cout << "Exiting...\n";
+            cout << "Enter the name : "
+                 << " ";
+            cin >> roll;
+            cout << endl;
+            obj.deleteStudentDetails(roll);
+            break;
+        case 5:
+            cout << "Exiting..." << endl;
+            exit(0);
             break;
         default:
-            cout << "Invalid choice! Please try again.\n";
+            cout << "Enter a Valid Choice " << endl;
+            break;
         }
-    } while (choice != 4);
+    } while (ch1 == 1);
 
     return 0;
 }

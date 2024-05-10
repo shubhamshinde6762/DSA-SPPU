@@ -1,4 +1,6 @@
 #include <iostream>
+// #include <iomanip>
+// #include <ios>
 using namespace std;
 
 class Node
@@ -15,11 +17,23 @@ public:
 class OptimalBST
 {
     float p[20], q[20], cost[20][20], weight[20][20];
-    int rootIndex[20][20], n;
+    int parent[20][20], n;
     Node *root;
 
 public:
-    OptimalBST(int x) : n(x) {}
+    OptimalBST(int x) : n(x)
+    {
+        // cout << fixed << setprecision(2) << endl;
+        for (int i = 0; i < n; i++)
+        {
+            p[i] = q[i] = 0.0;
+            for (int j = 0; j < n; j++)
+            {
+                cost[i][j] = weight[i][j] = 0.0;
+                parent[i][j] = 0;
+            }
+        }
+    }
     void input();
     void build();
     void displayMatrix();
@@ -34,14 +48,18 @@ void OptimalBST::treePrint()
 {
     cout << "Tree is: ";
     inorder(root);
+    cout << endl;
     preorder(root);
+    cout << endl;
     postorder(root);
+    cout << endl;
     cout << endl;
 }
 
 void OptimalBST::input()
 {
     cout << "Enter the P for successful search:" << endl;
+    p[0] = 0;
     for (int i = 1; i <= n; i++)
     {
         cout << "p[" << i << "]" << "=";
@@ -62,16 +80,16 @@ void OptimalBST::build()
     for (int i = 0; i < n; i++)
     {
         cost[i][i] = 0.0;
-        rootIndex[i][i] = 0;
+        parent[i][i] = 0;
         weight[i][i] = q[i];
 
         weight[i][i + 1] = q[i] + q[i + 1] + p[i + 1];
         cost[i][i + 1] = q[i] + q[i + 1] + p[i + 1];
-        rootIndex[i][i + 1] = i + 1;
+        parent[i][i + 1] = i + 1;
     }
 
     cost[n][n] = 0.0;
-    rootIndex[n][n] = 0;
+    parent[n][n] = 0;
     weight[n][n] = q[n];
 
     for (int i = 2; i <= n; i++)
@@ -79,13 +97,13 @@ void OptimalBST::build()
         for (int j = 0; j <= n - i; j++)
         {
             weight[j][j + i] = q[j + i] + p[j + i] + weight[j][j + i - 1];
-            cost[j][j + i] = 1e5;
+            cost[j][j + i] = 999;
             for (int k = j + 1; k <= j + i; k++)
             {
                 if (cost[j][j + i] > (cost[j][k - 1] + cost[k][j + i]))
                 {
                     cost[j][j + i] = cost[j][k - 1] + cost[k][j + i];
-                    rootIndex[j][j + i] = k;
+                    parent[j][j + i] = k;
                 }
             }
             cost[j][j + i] += weight[j][j + i];
@@ -119,7 +137,7 @@ void OptimalBST::displayMatrix()
     for (int i = 0; i <= n; i++)
     {
         for (int j = 0; j <= n; j++)
-            cout << rootIndex[i][j] << " ";
+            cout << parent[i][j] << " ";
         cout << endl;
     }
     cout << endl;
@@ -129,10 +147,14 @@ Node *OptimalBST::buildTree(int i, int j)
 {
     if (i > j)
         return nullptr;
-    int index = rootIndex[i][j];
-    Node *root = new Node(index);
+
+    cout << "Building tree from " << i << " to " << j << endl;
+
+    int index = parent[i][j];
+    cout << "Index: " << index << endl;
+    Node *root = new Node(index > 0 ? index : j);
     root->left = buildTree(i, index - 1);
-    root->right = buildTree(index, j);
+    root->right = buildTree(index + 1, j);
     return root;
 }
 

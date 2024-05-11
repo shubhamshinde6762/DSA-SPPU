@@ -145,7 +145,7 @@ void OptimalBST::displayMatrix()
 
 Node *OptimalBST::buildTree(int i, int j)
 {
-    if (i > j)
+    if (i >= j)
         return nullptr;
 
     cout << "Building tree from " << i << " to " << j << endl;
@@ -153,8 +153,10 @@ Node *OptimalBST::buildTree(int i, int j)
     int index = parent[i][j];
     cout << "Index: " << index << endl;
     Node *root = new Node(index > 0 ? index : j);
-    root->left = buildTree(i, index - 1);
-    root->right = buildTree(index + 1, j);
+    if (parent[i][index - 1] != 0)
+        root->left = buildTree(i, index - 1);
+    if (parent[index][j] != 0)
+        root->right = buildTree(index, j);
     return root;
 }
 

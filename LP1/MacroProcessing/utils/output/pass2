@@ -1,0 +1,8 @@
+start
+mover areg, +'8'
+cmp areg, breg
+add areg areg, 
+mover breg qreg 
+sub areg creg 
+mover creg areg, 
+end

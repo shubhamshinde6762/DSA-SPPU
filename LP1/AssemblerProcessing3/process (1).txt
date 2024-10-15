@@ -1,0 +1,9 @@
+( AD, start ) 100
+( IS, 04 ) areg, x
+( IS, 02 ) areg, ='5'
+( IS, 03 ) breg, y
+( IS, 01 ) y
+( IS, 0 ) 
+( DL, dc ) 9
+( DL, ds ) 2
+( AD, end ) 

@@ -1,0 +1,6 @@
+1 add areg &arg1 
+2 mover breg &arg2 
+3 mend 
+4 sub areg &arg2 
+5 mover creg &arg1 
+6 mend 

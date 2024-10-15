@@ -1,0 +1,17 @@
+( AD, start ) 200
+( IS, 02) areg, = '5'
+( IS, 03) areg, a
+IS, 02) areg, a
+( IS, 02) creg, b
+( IS, 04) creg, = '1'
+( IS, 12) any, next
+IS, 09) areg, = '1'
+( IS, 12) lt, back
+IS, 0) 
+( AD, origin ) loop+2
+( IS, 14) creg, b
+( AD, origin ) last+1
+DL, ds) 1
+IS, 05) loop
+DL, ds) 1
+( AD, end ) 

@@ -1,0 +1,5 @@
+START start
+MOV 02
+ADD 04
+JC 12
+END end

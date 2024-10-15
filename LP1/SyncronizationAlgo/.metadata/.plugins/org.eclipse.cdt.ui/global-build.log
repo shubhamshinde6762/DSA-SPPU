@@ -1,0 +1,161 @@
+11:22:26 **** Build of configuration Debug for project Syncro ****
+make all 
+Building file: ../src/Syncro.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Syncro.d" -MT"src/Syncro.o" -o "src/Syncro.o" "../src/Syncro.cpp"
+Finished building: ../src/Syncro.cpp
+ 
+Building target: Syncro
+Invoking: GCC C++ Linker
+g++  -o "Syncro"  ./src/Syncro.o   
+Finished building target: Syncro
+ 
+11:22:37 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+make: Nothing to be done for 'all'.
+11:23:03 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+make: Nothing to be done for 'all'.
+11:24:05 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+Building file: ../src/Syncro.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Syncro.d" -MT"src/Syncro.o" -o "src/Syncro.o" "../src/Syncro.cpp"
+../src/Syncro.cpp: In function ‘void* reader(void*)’:
+../src/Syncro.cpp:43:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   43 | }
+      | ^
+../src/Syncro.cpp: In function ‘void* writer(void*)’:
+../src/Syncro.cpp:62:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   62 | }
+      | ^
+../src/Syncro.cpp: In function ‘int main()’:
+../src/Syncro.cpp:72:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   72 |         pthread_create(&r[0],NULL,(void *)reader,(void *)0);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:73:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   73 |         pthread_create(&w[0],NULL,(void *)writer,(void *)0);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:74:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   74 |         pthread_create(&r[1],NULL,(void *)reader,(void *)1);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:75:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   75 |         pthread_create(&r[2],NULL,(void *)reader,(void *)2);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:76:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   76 |         pthread_create(&r[3],NULL,(void *)reader,(void *)3);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:77:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   77 |         pthread_create(&w[1],NULL,(void *)writer,(void *)3);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/Syncro.cpp:78:35: error: invalid conversion from ‘void*’ to ‘void* (*)(void*)’ [-fpermissive]
+   78 |         pthread_create(&r[4],NULL,(void *)reader,(void *)4);
+      |                                   ^~~~~~~~~~~~~~
+      |                                   |
+      |                                   void*
+In file included from ../src/Syncro.cpp:11:
+/usr/include/pthread.h:200:15: note:   initializing argument 3 of ‘int pthread_create(pthread_t*, const pthread_attr_t*, void* (*)(void*), void*)’
+  200 |       void *(*__start_routine) (void *),
+      |       ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:20: src/Syncro.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:28:42 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+Building file: ../src/Syncro.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Syncro.d" -MT"src/Syncro.o" -o "src/Syncro.o" "../src/Syncro.cpp"
+Finished building: ../src/Syncro.cpp
+ 
+Building target: Syncro
+Invoking: GCC C++ Linker
+g++  -o "Syncro"  ./src/Syncro.o   
+/usr/bin/ld: ./src/Syncro.o: in function `reader(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:17: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:20: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:22: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:26: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:29: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:31: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `writer(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:39: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:44: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `main':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:53: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:54: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:58: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:63: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:67: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:71: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:74: undefined reference to `sem_destroy'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:75: undefined reference to `sem_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:58: Syncro] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:29:45 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+Building file: ../src/Syncro.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Syncro.d" -MT"src/Syncro.o" -o "src/Syncro.o" "../src/Syncro.cpp"
+Finished building: ../src/Syncro.cpp
+ 
+Building target: Syncro
+Invoking: GCC C++ Linker
+g++  -o "Syncro"  ./src/Syncro.o   
+/usr/bin/ld: ./src/Syncro.o: in function `reader(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:17: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:20: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:22: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:26: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:29: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:31: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `writer(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:39: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:44: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `main':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:53: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:54: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:58: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:63: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:67: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:71: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:74: undefined reference to `sem_destroy'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:75: undefined reference to `sem_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:58: Syncro] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.

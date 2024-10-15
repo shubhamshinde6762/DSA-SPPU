@@ -1,0 +1,35 @@
+11:29:45 **** Incremental Build of configuration Debug for project Syncro ****
+make all 
+Building file: ../src/Syncro.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Syncro.d" -MT"src/Syncro.o" -o "src/Syncro.o" "../src/Syncro.cpp"
+Finished building: ../src/Syncro.cpp
+ 
+Building target: Syncro
+Invoking: GCC C++ Linker
+g++  -o "Syncro"  ./src/Syncro.o   
+/usr/bin/ld: ./src/Syncro.o: in function `reader(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:17: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:20: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:22: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:26: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:29: undefined reference to `sem_post'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:31: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `writer(void*)':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:39: undefined reference to `sem_wait'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:44: undefined reference to `sem_post'
+/usr/bin/ld: ./src/Syncro.o: in function `main':
+/home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:53: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:54: undefined reference to `sem_init'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:58: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:63: undefined reference to `pthread_create'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:67: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:71: undefined reference to `pthread_join'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:74: undefined reference to `sem_destroy'
+/usr/bin/ld: /home/pict/Documents/31484_LP/Syncro/Syncro/Debug/../src/Syncro.cpp:75: undefined reference to `sem_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:58: Syncro] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+
+11:29:47 Build Failed. 20 errors, 0 warnings. (took 1s.425ms)
+

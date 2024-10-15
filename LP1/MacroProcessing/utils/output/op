@@ -1,0 +1,6 @@
+start
+mover areg, +'8'
+cmp areg, breg
+incr areg, qreg
+pvg areg, creg
+end

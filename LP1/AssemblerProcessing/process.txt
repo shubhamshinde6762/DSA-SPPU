@@ -1,0 +1,7 @@
+(AD, start) 200
+(IS, 02) areg, a1
+(IS, 02) breg, 20
+(IS, 04) areg, breg
+(IS, 12) loop
+(DL, dc) 10
+(AD, end) 
